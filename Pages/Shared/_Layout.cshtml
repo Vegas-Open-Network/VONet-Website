@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Vegas Open Network</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css?id=@Guid.NewGuid()" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/098aca8adc.js" crossorigin="anonymous"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YP3S1G8RD4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-YP3S1G8RD4');
+    </script>
+
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 py-4">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index"> <img src="~/images/vonetlogo_white.png" class="img-fluid" style="max-height: 80px;" /> </a>
+                </div>
+                <div class="col-6 py-4" style="text-align:right;">
+                    @*<a href="/donate" class="btn btn-light my-1">Donate</a>  <a href="/volunteer" class="btn btn-light my-1">Volunteer</a> <a href="/join" class="btn btn-light my-1">Get Connected</a> *@
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+   
+    <footer class="container text-center py-3">
+        <small>Content is available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike</a> unless otherwise noted. <br />Community Network operates according to <a href="https://wiki.vonet.org/index.php?title=Network_Commons_License">Network Commons License</a> and supports <a href="https://wiki.vonet.org/index.php?title=Net_Neutrality_Policy">Net Neutrality</a>.</small><br />
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img class="py-4" src="https://wiki.vonet.org/resources/assets/licenses/cc-by-sa.png" /></a> <a href="https://www.facebook.com/VegasOpenNetwork/" target="_blank"><i class="fa-brands fa-square-facebook fa-xl"></i></a> <a href="https://x.com/vegasopennet" target="_blank"><i class="fa-brands fa-square-x-twitter fa-xl"></i></a>
+    </footer>
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js?id=@Guid.NewGuid()" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
