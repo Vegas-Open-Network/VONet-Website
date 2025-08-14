@@ -24,12 +24,8 @@
 
     <link rel="sitemap" type="application/xml" title="Sitemap" href="~/sitemap.xml">
 
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css?id=@Guid.NewGuid()" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/098aca8adc.js" crossorigin="anonymous"></script>
 
@@ -129,8 +125,7 @@
     <!-- End Google Tag Manager -->
 
 </head>
-<body>
-
+<body class="bg-light text-body">
     <!-- Google Tag Manager (noscript) -->
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZVDPJ55"
@@ -138,33 +133,64 @@
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <header>
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="bg-dark text-white py-2 small text-center">Building a fair, accessible, and community‑owned internet across Las Vegas.</div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
         <div class="container">
-            <div class="row">
-                <div class="col-6 py-4">
-                    <a class="navbar-brand" asp-area="" asp-page="/Index"> <img src="~/images/vonetlogo_white.png" class="img-fluid" style="max-height: 80px;" /> </a>
-                </div>
-                <div class="col-6 py-4" style="text-align:right;">
-                    @*<a href="/donate" class="btn btn-light my-1">Donate</a>  <a href="/volunteer" class="btn btn-light my-1">Volunteer</a> <a href="/join" class="btn btn-light my-1">Get Connected</a> *@
-                </div>
+            <a class="navbar-brand fw-bold" href="#home">Vegas Open Network <span class="badge bg-success ms-1">VONet</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="nav" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto small fw-semibold">
+                    <li class="nav-item"><a class="nav-link" href="#mission">Mission</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how">How</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#join">Join</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#volunteer">Volunteer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#donate">Donate</a></li> 
+                    <!-- Outbound quick links -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Resources</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="https://wiki.vonet.org/" target="_blank" rel="noreferrer">Wiki / Docs</a></li>
+                            <li><a class="dropdown-item" href="https://forums.vonet.org/" target="_blank" rel="noreferrer">Forums</a></li>
+                            <li><a class="dropdown-item" href="https://newsletter.vonet.org/?id=1&p=subscribe" target="_blank" rel="noreferrer">Newsletter</a></li>
+                            <li><a class="dropdown-item" href="https://support.vonet.org" target="_blank" rel="noreferrer">Support portal</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="https://wiki.vonet.org/index.php?title=Network_Commons_License" target="_blank" rel="noreferrer">Network Commons License</a></li>
+                            <li><a class="dropdown-item" href="https://wiki.vonet.org/index.php?title=FAQ" target="_blank" rel="noreferrer">FAQ</a></li>
+                            <li><a class="dropdown-item" href="https://wiki.vonet.org/index.php?title=Vegas_Open_Network_Wiki:Privacy_policy" target="_blank" rel="noreferrer">Privacy policy</a></li>
+                            <li><a class="dropdown-item" href="https://wiki.vonet.org/index.php?title=Code_of_Conduct" target="_blank" rel="noreferrer">Code of Conduct</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    @RenderBody()
 
-   
-    <footer class="container text-center py-3">
-        <small>Content is available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike</a> unless otherwise noted. <br />Community Network operates according to <a href="https://wiki.vonet.org/index.php?title=Network_Commons_License">Network Commons License</a> and supports <a href="https://wiki.vonet.org/index.php?title=Net_Neutrality_Policy">Net Neutrality</a>.</small><br />
-        <p class="py-2"><a href="https://wiki.vonet.org/index.php?title=Vegas_Open_Network_Wiki:Privacy_policy">Privacy Policy</a> | <a href="https://wiki.vonet.org/index.php?title=Code_of_Conduct">Code of Conduct</a> | <a href="https://wiki.vonet.org/index.php?title=FAQ">FAQ</a> </p>
-        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img class="py-2" src="https://wiki.vonet.org/resources/assets/licenses/cc-by-sa.png" /></a> <a href="https://www.facebook.com/VegasOpenNetwork/" target="_blank"><i class="fa-brands fa-square-facebook fa-xl"></i></a> <a href="https://x.com/vegasopennet" target="_blank"><i class="fa-brands fa-square-x-twitter fa-xl"></i></a> <a href="https://github.com/Vegas-Open-Network" target="_blank"><i class="fa-brands fa-square-github fa-xl"></i></a>
+    <!-- FOOTER -->
+    <footer class="py-4 bg-dark text-white border-top">
+        <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center gap-2">
+            <p class="mb-0 small">
+                Content is available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:white;" target="_blank">Creative Commons Attribution-ShareAlike</a> unless otherwise noted.
+            </p>
+            <div class="small">
+                <a class="link-light me-2" href="https://wiki.vonet.org/index.php?title=Network_Commons_License" target="_blank" rel="noreferrer">Network Commons License</a>
+                <a class="link-light me-2" href="https://wiki.vonet.org/index.php?title=Vegas_Open_Network_Wiki:Privacy_policy" target="_blank" rel="noreferrer">Privacy</a>
+                <a class="link-light me-2" href="https://wiki.vonet.org/index.php?title=Code_of_Conduct" target="_blank" rel="noreferrer">Code of Conduct</a>
+                <a class="link-light" href="https://wiki.vonet.org/index.php?title=FAQ" target="_blank" rel="noreferrer">FAQ</a>
+            </div>
+            <a href="#home" class="btn btn-outline-light btn-sm">Back to top</a>
+        </div>
     </footer>
 
-    <script src="~/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/js/site.js?id=@Guid.NewGuid()" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

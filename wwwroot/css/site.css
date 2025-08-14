@@ -1,40 +1,19 @@
-body {
-    background-color: #20201f;
-    color: white;
-    font-family: "Victor Mono", monospace;
-    font-optical-sizing: auto;
+html {
+    scroll-behavior: smooth;
 }
 
-a {
-    color:white
+.section {
+    padding: 72px 0;
 }
 
-
-.victor-mono-thin {
-    font-family: "Victor Mono", monospace;
-    font-optical-sizing: auto;
-    font-weight: 100;
-    font-style: normal;
+.card-quiet {
+    border-radius: 1rem;
 }
 
-.victor-mono-light {
-    font-family: "Victor Mono", monospace;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
+.ratio > iframe {
+    border: 0;
 }
 
-.victor-mono-regular {
-    font-family: "Victor Mono", monospace;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
+.subtle a {
+    text-decoration: none;
 }
-
-.victor-mono-bold {
-    font-family: "Victor Mono", monospace;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
-}
-
