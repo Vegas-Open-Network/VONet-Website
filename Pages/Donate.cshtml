@@ -1,0 +1,439 @@
+@page
+@model VONetWebsite.Pages.DonateModel
+@{
+    ViewData["Title"] = "Support VONet";
+}
+
+<style>
+    .donation-form {
+        background: var(--light-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 2px solid #f0f0f0;
+        transition: all 0.3s ease;
+    }
+
+    .donation-form:hover {
+        box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        border-color: var(--bright-cyan);
+    }
+
+    .amount-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .amount-option {
+        position: relative;
+    }
+
+    .amount-option input[type="radio"] {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .amount-label {
+        display: block;
+        padding: 16px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+        background: #fafafa;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .amount-option input[type="radio"]:checked + .amount-label {
+        border-color: var(--hot-pink);
+        background: linear-gradient(135deg, var(--hot-pink), #ff1a9b);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(236, 0, 140, 0.3);
+    }
+
+    .amount-option input[type="radio"]:focus + .amount-label {
+        outline: 2px solid var(--bright-cyan);
+        outline-offset: 2px;
+    }
+
+    .custom-amount {
+        position: relative;
+        margin-top: 16px;
+    }
+
+    .custom-amount-input {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px 20px 16px 45px;
+        font-size: 1.1rem;
+        width: 100%;
+        background: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+    .custom-amount-input:focus {
+        outline: none;
+        border-color: var(--bright-cyan);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0, 182, 227, 0.1);
+    }
+
+    .currency-symbol {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #666;
+        pointer-events: none;
+    }
+
+    .donate-button {
+        background: linear-gradient(135deg, var(--sunny-yellow), #ffd700);
+        color: var(--dark-text);
+        border: none;
+        border-radius: 8px;
+        padding: 18px 36px;
+        font-size: 1.2rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 24px;
+    }
+
+    .donate-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px rgba(255, 209, 0, 0.4);
+        background: linear-gradient(135deg, #e6bc00, #ffd700);
+    }
+
+    .donate-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .payment-methods {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 2px solid #f0f0f0;
+    }
+
+    .payment-method {
+        padding: 20px;
+        margin: 12px 0;
+        border: 2px solid #f0f0f0;
+        border-radius: 8px;
+        background: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+    .payment-method:hover {
+        border-color: var(--bright-cyan);
+        background: white;
+    }
+
+    .payment-method h5 {
+        color: var(--hot-pink);
+        margin-bottom: 8px;
+    }
+
+    .form-note {
+        background: #f8f9ff;
+        border-left: 4px solid var(--bright-cyan);
+        padding: 16px;
+        margin: 16px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    @@media (max-width: 768px) {
+        .amount-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .donation-form {
+            margin: 20px;
+        }
+    }
+</style>
+
+<!-- HERO SECTION -->
+<section class="section textured-bg" style="background: linear-gradient(135deg, var(--hot-pink), #ff1a9b); color: white; padding: 80px 0;">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 mb-4" data-aos="fade-up">
+                    Power the Future of Internet in Las Vegas
+                </h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Your support helps us build hardware, maintain infrastructure, and keep VONet free for everyone in our community.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DONATION FORM SECTION -->
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="donation-form p-5" data-aos="fade-up">
+                    <div class="text-center mb-4">
+                        <h3>Support Vegas Open Network</h3>
+                        <p class="text-secondary">VONet is fiscally sponsored by <strong>Raft Foundation Inc.</strong>, a 501(c)(3) nonprofit.<br>
+                        Your donation is tax-deductible and supports our community-owned internet mission.</p>
+                    </div>
+
+                    <form id="donationForm">
+                        <!-- Monthly Donation Options -->
+                        <div>
+                            <h5 class="mb-3">Choose a monthly amount:</h5>
+                            <div class="amount-grid">
+                                <div class="amount-option">
+                                    <input type="radio" name="monthly" value="15" id="monthly-15">
+                                    <label for="monthly-15" class="amount-label">$15</label>
+                                </div>
+                                <div class="amount-option">
+                                    <input type="radio" name="monthly" value="25" id="monthly-25" checked>
+                                    <label for="monthly-25" class="amount-label">$25</label>
+                                </div>
+                                <div class="amount-option">
+                                    <input type="radio" name="monthly" value="50" id="monthly-50">
+                                    <label for="monthly-50" class="amount-label">$50</label>
+                                </div>
+                                <div class="amount-option">
+                                    <input type="radio" name="monthly" value="100" id="monthly-100">
+                                    <label for="monthly-100" class="amount-label">$100</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- One-time Donation -->
+                        <div class="mt-4">
+                            <h5 class="mb-3">Or make a one-time donation:</h5>
+                            <div class="custom-amount">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" 
+                                       id="customAmount" 
+                                       class="custom-amount-input" 
+                                       placeholder="Enter amount" 
+                                       min="1" 
+                                       step="1"
+                                       aria-label="Custom donation amount">
+                            </div>
+                            <div class="form-note">
+                                <strong>Note:</strong> If you enter a one-time amount, we'll redirect you to Open Collective for secure payment processing. Leave blank for monthly donations. For anonymous donations, use the "incognito" feature on Open Collective.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="donate-button" id="donateButton">
+                            <i class="fas fa-heart me-2"></i>Donate with Card
+                        </button>
+                    </form>
+
+                    <!-- Alternative Payment Methods -->
+                    <div class="payment-methods">
+                        <h5 class="text-center mb-4">Other Ways to Donate</h5>
+                        
+                        <div class="payment-method">
+                            <h5><i class="fas fa-university me-2"></i>Bank Transfer (Preferred)</h5>
+                            <p class="mb-2">We prefer ACH or wire transfers over check donations for faster processing.</p>
+                            <small class="text-muted">
+                                <strong>Instructions:</strong> Please <a href="mailto:support@vonet.org">contact us</a>.<br>
+                                You'll also need to fill out <a href="https://forms.raft.foundation/donation" target="_blank">this form</a> so we know the funds are for Vegas Open Network.
+                            </small>
+                        </div>
+
+                        <div class="payment-method">
+                            <h5><i class="fas fa-money-check me-2"></i>Donate by Check</h5>
+                            <p class="mb-2">Make checks payable to <strong>"Raft Foundation Inc."</strong> with <strong>"Vegas Open Network"</strong> in the memo line.</p>
+                            <small class="text-muted">
+                                <strong>Mail to:</strong> Raft Foundation Inc., 418 Broadway #4137, Albany, NY 12207, USA<br>
+                                Please <a href="https://forms.raft.foundation/donation" target="_blank">fill out this form</a> first to ensure smooth processing.<br>
+                                <em>Note: Mailed checks may be delayed 3-5 days for processing.</em>
+                            </small>
+                        </div>
+
+                        <div class="payment-method">
+                            <h5><i class="fas fa-briefcase me-2"></i>Employee Match & Giving</h5>
+                            <p class="mb-2">Does your employer match charitable donations? We can work with your company's giving program.</p>
+                            <small class="text-muted">
+                                Please <a href="https://forms.raft.foundation/donation" target="_blank">fill out this form</a> when submitting to your employer.<br>
+                                <a href="mailto:support@vonet.org">Contact us</a> if you need assistance with the process.
+                            </small>
+                        </div>
+
+                        <div class="payment-method">
+                            <h5><i class="fas fa-question-circle me-2"></i>Questions or Anonymous Donations</h5>
+                            <p class="mb-2">Need help with your donation or want to donate anonymously?</p>
+                            <small class="text-muted">
+                                For anonymous credit card donations, use the "incognito" feature on Open Collective.
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Tax Information -->
+                    <div class="text-center mt-4 pt-4" style="border-top: 2px solid #f0f0f0;">
+                        <small class="text-muted">
+                            <strong>Tax Information:</strong> Raft Foundation Inc. is a 501(c)(3) public charity.<br>
+                            <strong>EIN:</strong> 99-1103921 | <strong>Address:</strong> 418 Broadway #4137, Albany, NY 12207<br>
+                            Vegas Open Network is a fiscally sponsored project of Raft Foundation.<br>
+                            Your donations are tax-deductible to the full extent of the law.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY DONATE SECTION -->
+<section class="section textured-bg" style="background-color: var(--bright-cyan); color: white;">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 data-aos="fade-up">Why Your Support Matters</h2>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mb-3">
+                            <i class="fas fa-wifi" style="font-size: 3rem; opacity: 0.9;"></i>
+                        </div>
+                        <h5>Equipment & Infrastructure</h5>
+                        <p class="small opacity-90">Rooftop antennas, network cables, and backup power systems that keep our community connected 24/7.</p>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mb-3">
+                            <i class="fas fa-tools" style="font-size: 3rem; opacity: 0.9;"></i>
+                        </div>
+                        <h5>Maintenance & Support</h5>
+                        <p class="small opacity-90">Regular upkeep, technical support, and community training to ensure reliable service for all users.</p>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="mb-3">
+                            <i class="fas fa-expand-arrows-alt" style="font-size: 3rem; opacity: 0.9;"></i>
+                        </div>
+                        <h5>Network Expansion</h5>
+                        <p class="small opacity-90">Growing coverage to underserved neighborhoods and increasing bandwidth for the entire community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function() {
+            // Base URLs for donations
+            const monthlyUrl = 'https://opencollective.com/vonet/contribute/backers-92665/checkout';
+            const oneTimeUrl = 'https://opencollective.com/vonet/donate';
+            const donateButton = document.getElementById('donateButton');
+            const customAmountInput = document.getElementById('customAmount');
+            const donationForm = document.getElementById('donationForm');
+
+            function buildMonthlyDonationUrl(amount) {
+                const url = new URL(monthlyUrl);
+                if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
+                    url.searchParams.set('amount', String(Number(amount))); // Keep as dollars, not cents
+                }
+                url.searchParams.set('interval', 'month');
+                return url.toString();
+            }
+
+            function buildOneTimeDonationUrl(amount) {
+                const url = new URL(oneTimeUrl);
+                url.searchParams.set('interval', 'oneTime');
+                if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
+                    url.searchParams.set('amount', String(Number(amount)));
+                }
+                return url.toString();
+            }
+
+            // Handle form submission
+            donationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const customAmount = parseInt(customAmountInput.value, 10);
+                
+                // Check if custom amount is provided
+                if (!isNaN(customAmount) && customAmount > 0) {
+                    // One-time donation
+                    window.open(buildOneTimeDonationUrl(customAmount), '_blank');
+                    return;
+                }
+                
+                // Monthly donation
+                const selectedMonthly = document.querySelector('input[name="monthly"]:checked');
+                const monthlyAmount = selectedMonthly ? parseInt(selectedMonthly.value, 10) : 50;
+                
+                window.open(buildMonthlyDonationUrl(monthlyAmount), '_blank');
+            });
+
+            // Clear monthly selection when custom amount is entered
+            customAmountInput.addEventListener('input', function() {
+                if (this.value) {
+                    document.querySelectorAll('input[name="monthly"]').forEach(radio => {
+                        radio.checked = false;
+                    });
+                    document.querySelectorAll('.amount-label').forEach(label => {
+                        label.classList.remove('selected');
+                    });
+                }
+                updateButtonText();
+            });
+
+            // Handle monthly amount selection
+            document.querySelectorAll('input[name="monthly"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        customAmountInput.value = '';
+                        // Update visual selection
+                        document.querySelectorAll('.amount-label').forEach(label => {
+                            label.classList.remove('selected');
+                        });
+                        this.nextElementSibling.classList.add('selected');
+                    }
+                    updateButtonText();
+                });
+            });
+
+            function updateButtonText() {
+                const customAmount = customAmountInput.value;
+                const selectedMonthly = document.querySelector('input[name="monthly"]:checked');
+                
+                if (customAmount) {
+                    donateButton.innerHTML = '<i class="fas fa-heart me-2"></i>Donate $' + customAmount + ' Once';
+                } else if (selectedMonthly) {
+                    donateButton.innerHTML = '<i class="fas fa-heart me-2"></i>Donate $' + selectedMonthly.value + ' Monthly';
+                } else {
+                    donateButton.innerHTML = '<i class="fas fa-heart me-2"></i>Choose Amount to Donate';
+                }
+            }
+
+            // Initialize button text
+            updateButtonText();
+
+            // Auto-select default monthly option
+            document.getElementById('monthly-25').checked = true;
+            document.querySelector('label[for="monthly-25"]').classList.add('selected');
+            updateButtonText();
+        })();
+    </script>
+}
