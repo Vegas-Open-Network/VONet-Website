@@ -1,8 +1,8 @@
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 USER $APP_UID
-# Change the WORKDIR to use the standard /app path
-WORKDIR /app
+# Use the correct path for the Virtuozzo platform
+WORKDIR /home/jelastic/APP/ROOT
 EXPOSE 8080
 EXPOSE 8081
 
@@ -23,10 +23,9 @@ RUN dotnet publish "./VONetWebsite.csproj" -c $BUILD_CONFIGURATION -o /app/publi
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
-# Change the WORKDIR to use the standard /app path
-WORKDIR /app
-# Copy the published files to the new, correct directory
+# Use the correct path for the Virtuozzo platform
+WORKDIR /home/jelastic/APP/ROOT
+# Copy the published files to the correct directory
 COPY --from=publish /app/publish .
-# This is the key line to fix the "localhost" issue
 ENV ASPNETCORE_URLS=http://+:8080
 ENTRYPOINT ["dotnet", "VONetWebsite.dll"]
