@@ -28,7 +28,7 @@ app.UseForwardedHeaders();
 
 // The UseHttpsRedirection middleware is now safe to keep, as UseForwardedHeaders
 // will handle the redirection correctly by inspecting the proxy headers.
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseRouting();
