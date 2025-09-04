@@ -4,8 +4,6 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-# Ensure the application listens on port 8080
-ENV ASPNETCORE_HTTP_PORTS=8080
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
@@ -26,4 +24,6 @@ RUN dotnet publish "./VONetWebsite.csproj" -c $BUILD_CONFIGURATION -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# This is the key line to fix the "localhost" issue
+ENV ASPNETCORE_URLS=http://+:8080
 ENTRYPOINT ["dotnet", "VONetWebsite.dll"]
