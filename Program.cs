@@ -1,25 +1,28 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Use platform port only when provided (e.g., Virtuozzo)
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+// Keep HTTPS redirect. It works in VS with the dev cert.
+// (If you don’t use HTTPS locally, comment the next line.)
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapRazorPages();
-
 app.Run();
