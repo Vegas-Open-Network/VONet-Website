@@ -337,6 +337,27 @@
                     color: var(--sunny-yellow);
                 }
 
+        /* --- Video Section --- */
+        .video-container {
+            background: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+            .video-container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+                border-color: var(--bright-cyan);
+            }
+
+            .video-container iframe {
+                border: none;
+                border-radius: 10px;
+            }
+
         .social-icon {
             display: inline-flex;
             align-items: center;
