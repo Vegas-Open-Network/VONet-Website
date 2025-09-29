@@ -1,0 +1,547 @@
+@page
+@model VONetWebsite.Pages.VolunteerModel
+@{
+    ViewData["Title"] = "Volunteer with VONet";
+}
+
+<style>
+    .volunteer-card {
+        background: var(--light-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 2px solid #f0f0f0;
+        transition: all 0.3s ease;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .volunteer-card:hover {
+        box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        border-color: var(--bright-cyan);
+        transform: translateY(-5px);
+    }
+
+    .card-header-custom {
+        padding: 30px 30px 20px;
+        background: linear-gradient(135deg, var(--hot-pink), #ff1a9b);
+        color: white;
+        text-align: center;
+    }
+
+    .card-header-custom.alt-1 {
+        background: linear-gradient(135deg, var(--bright-cyan), #0094b8);
+    }
+
+    .card-header-custom.alt-2 {
+        background: linear-gradient(135deg, var(--sunny-yellow), #e6bc00);
+        color: var(--dark-text);
+    }
+
+    .card-header-custom.alt-3 {
+        background: linear-gradient(135deg, #F26419, #d1520f);
+    }
+
+    .card-header-custom .icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+    }
+
+    .card-body-custom {
+        padding: 30px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .skills-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .skills-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
+        padding-left: 25px;
+    }
+
+    .skills-list li:before {
+        content: "?";
+        position: absolute;
+        left: 0;
+        color: var(--bright-cyan);
+        font-weight: bold;
+    }
+
+    .skills-list li:last-child {
+        border-bottom: none;
+    }
+
+    .time-commitment {
+        background: #f8f9ff;
+        border-left: 4px solid var(--bright-cyan);
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .volunteer-cta {
+        background: linear-gradient(135deg, var(--hot-pink), #ff1a9b);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: auto;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .volunteer-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(236, 0, 140, 0.3);
+        background: linear-gradient(135deg, #d1006f, #ff1a9b);
+        color: white;
+    }
+
+    .volunteer-cta.alt-1 {
+        background: linear-gradient(135deg, var(--bright-cyan), #0094b8);
+    }
+
+    .volunteer-cta.alt-1:hover {
+        background: linear-gradient(135deg, #0094b8, var(--bright-cyan));
+        box-shadow: 0 8px 20px rgba(0, 182, 227, 0.3);
+    }
+
+    .volunteer-cta.alt-2 {
+        background: linear-gradient(135deg, var(--sunny-yellow), #e6bc00);
+        color: var(--dark-text);
+    }
+
+    .volunteer-cta.alt-2:hover {
+        background: linear-gradient(135deg, #e6bc00, var(--sunny-yellow));
+        box-shadow: 0 8px 20px rgba(255, 209, 0, 0.3);
+        color: var(--dark-text);
+    }
+
+    .volunteer-cta.alt-3 {
+        background: linear-gradient(135deg, #F26419, #d1520f);
+    }
+
+    .volunteer-cta.alt-3:hover {
+        background: linear-gradient(135deg, #d1520f, #F26419);
+        box-shadow: 0 8px 20px rgba(242, 100, 25, 0.3);
+    }
+
+    .contact-form {
+        background: var(--light-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 2px solid #f0f0f0;
+        padding: 40px;
+        margin-top: 40px;
+    }
+
+    .form-control-custom {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        background: #fafafa;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .form-control-custom:focus {
+        outline: none;
+        border-color: var(--bright-cyan);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0, 182, 227, 0.1);
+    }
+
+    .form-label-custom {
+        font-weight: 700;
+        color: var(--dark-text);
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .volunteer-stats {
+        background: linear-gradient(135deg, var(--sunny-yellow), #ffd700);
+        color: var(--dark-text);
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .stat-item {
+        padding: 20px;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 900;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .testimonial-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 2px solid #f0f0f0;
+        margin: 20px 0;
+        position: relative;
+    }
+
+    .testimonial-card:before {
+        content: '"';
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        font-size: 4rem;
+        color: var(--hot-pink);
+        font-family: serif;
+    }
+
+    .testimonial-author {
+        font-weight: 700;
+        color: var(--hot-pink);
+        margin-top: 20px;
+    }
+
+    @@media (max-width: 768px) {
+        .card-header-custom {
+            padding: 20px 20px 15px;
+        }
+        
+        .card-body-custom {
+            padding: 20px;
+        }
+        
+        .contact-form {
+            padding: 25px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<!-- HERO SECTION -->
+<section class="section textured-bg" style="background: linear-gradient(135deg, var(--bright-cyan), #0094b8); color: white; padding: 80px 0;">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 mb-4" data-aos="fade-up">
+                    Build the Future of Internet in Vegas
+                </h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Join our community of volunteers helping to create a fair, accessible, and community-owned network for everyone in Las Vegas.
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#volunteer-roles" class="btn btn-primary-solid">See Volunteer Opportunities</a>
+                    <a href="#get-started" class="btn btn-secondary-outline">Get Started Today</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY VOLUNTEER SECTION -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 data-aos="fade-up">Why Volunteer with VONet?</h2>
+            <p class="text-secondary" data-aos="fade-up" data-aos-delay="100">Be part of something bigger than yourself. Help build digital infrastructure that serves our community, not corporate profits.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-custom textured-bg" style="background-color: var(--hot-pink); color: white;">
+                    <div class="icon"><i class="fas fa-hands-helping"></i></div>
+                    <h5>Make Real Impact</h5>
+                    <p class="small mb-0">Every hour you contribute directly helps expand internet access to more Vegas neighborhoods and families.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-custom textured-bg" style="background-color: var(--bright-cyan); color: white;">
+                    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h5>Learn New Skills</h5>
+                    <p class="small mb-0">Gain hands-on experience with networking, community organizing, technical writing, and more.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card-custom textured-bg" style="background-color: #F26419; color: white;">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h5>Join a Community</h5>
+                    <p class="small mb-0">Connect with like-minded neighbors who believe in community ownership and digital equity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VOLUNTEER STATS -->
+<section class="volunteer-stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <h5>Active Volunteers</h5>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-item">
+                    <span class="stat-number">200+</span>
+                    <h5>Hours Contributed</h5>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <h5>Nodes Installed</h5>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-item">
+                    <span class="stat-number">5</span>
+                    <h5>Neighborhoods</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VOLUNTEER ROLES SECTION -->
+<section id="volunteer-roles" class="section bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 data-aos="fade-up">How You Can Help</h2>
+            <p class="text-secondary" data-aos="fade-up" data-aos-delay="100">Whether you're tech-savvy or not, there's a place for you in our community. Here are some ways to get involved.</p>
+        </div>
+        <div class="row g-4">
+            <!-- Network Installation -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="volunteer-card">
+                    <div class="card-header-custom">
+                        <div class="icon"><i class="fas fa-tools"></i></div>
+                        <h4>Network Installation</h4>
+                    </div>
+                    <div class="card-body-custom">
+                        <p>Help install rooftop antennas and configure network equipment. No prior experience required – we'll train you!</p>
+                        <ul class="skills-list">
+                            <li>Mount antennas on rooftops</li>
+                            <li>Run ethernet cables</li>
+                            <li>Configure network equipment</li>
+                            <li>Test signal strength</li>
+                        </ul>
+                        <div class="time-commitment">
+                            <strong>Time Commitment:</strong> Weekend installation days, 4-6 hours per session
+                        </div>
+                        <a href="https://forums.vonet.org/viewforum.php?f=7" target="_blank" class="volunteer-cta">Join Installation Team</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Outreach -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="volunteer-card">
+                    <div class="card-header-custom alt-1">
+                        <div class="icon"><i class="fas fa-bullhorn"></i></div>
+                        <h4>Community Outreach</h4>
+                    </div>
+                    <div class="card-body-custom">
+                        <p>Spread the word about VONet in your neighborhood and help connect with potential new users and hosts.</p>
+                        <ul class="skills-list">
+                            <li>Door-to-door outreach</li>
+                            <li>Neighborhood presentations</li>
+                            <li>Social media promotion</li>
+                            <li>Event coordination</li>
+                        </ul>
+                        <div class="time-commitment">
+                            <strong>Time Commitment:</strong> Flexible schedule, 2-4 hours per week
+                        </div>
+                        <a href="https://forums.vonet.org/viewforum.php?f=7" target="_blank" class="volunteer-cta alt-1">Start Outreach</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Support -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="volunteer-card">
+                    <div class="card-header-custom alt-2">
+                        <div class="icon"><i class="fas fa-laptop-code"></i></div>
+                        <h4>Technical Support</h4>
+                    </div>
+                    <div class="card-body-custom">
+                        <p>Help maintain our network infrastructure and provide technical support to community members.</p>
+                        <ul class="skills-list">
+                            <li>Network troubleshooting</li>
+                            <li>User support via forums</li>
+                            <li>Equipment maintenance</li>
+                            <li>Documentation updates</li>
+                        </ul>
+                        <div class="time-commitment">
+                            <strong>Time Commitment:</strong> On-call basis, 3-5 hours per week
+                        </div>
+                        <a href="https://forums.vonet.org/viewforum.php?f=7" target="_blank" class="volunteer-cta alt-2">Join Tech Team</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documentation & Training -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="500">
+                <div class="volunteer-card">
+                    <div class="card-header-custom alt-3">
+                        <div class="icon"><i class="fas fa-book"></i></div>
+                        <h4>Documentation & Training</h4>
+                    </div>
+                    <div class="card-body-custom">
+                        <p>Create guides, tutorials, and training materials to help new volunteers and community members.</p>
+                        <ul class="skills-list">
+                            <li>Write installation guides</li>
+                            <li>Create video tutorials</li>
+                            <li>Update wiki documentation</li>
+                            <li>Lead training sessions</li>
+                        </ul>
+                        <div class="time-commitment">
+                            <strong>Time Commitment:</strong> Project-based, 2-3 hours per week
+                        </div>
+                        <a href="https://forums.vonet.org/viewforum.php?f=7" target="_blank" class="volunteer-cta alt-3">Contribute Docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Opportunities -->
+        <div class="row g-4 mt-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
+                <div class="card-custom bg-white text-dark">
+                    <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h5>Event Coordination</h5>
+                    <p class="small text-secondary">Help organize meetups, workshops, and community events to grow our network.</p>
+                    <a href="https://forums.vonet.org/viewforum.php?f=7" class="fw-bold">Organize Events ?</a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="700">
+                <div class="card-custom bg-white text-dark">
+                    <div class="icon"><i class="fas fa-paint-brush"></i></div>
+                    <h5>Design & Marketing</h5>
+                    <p class="small text-secondary">Create graphics, flyers, and marketing materials to promote VONet in the community.</p>
+                    <a href="https://forums.vonet.org/viewforum.php?f=7" class="fw-bold">Join Creative Team ?</a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="800">
+                <div class="card-custom bg-white text-dark">
+                    <div class="icon"><i class="fas fa-gavel"></i></div>
+                    <h5>Policy & Advocacy</h5>
+                    <p class="small text-secondary">Help navigate regulations and advocate for community networks at the local level.</p>
+                    <a href="https://forums.vonet.org/viewforum.php?f=7" class="fw-bold">Advocate for Change ?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="section textured-bg" style="background-color: var(--hot-pink); color: white;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 data-aos="fade-up">What Our Volunteers Say</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <p>Volunteering with VONet has been incredibly rewarding. I've learned so much about networking technology while helping bring internet access to families who couldn't afford it before. It's amazing what we can accomplish when we work together as a community.</p>
+                    <div class="testimonial-author">— Sarah M., Installation Volunteer</div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <p>As someone with a tech background, I love that I can use my skills to make a real difference in my neighborhood. The community outreach work has connected me with neighbors I never would have met otherwise.</p>
+                    <div class="testimonial-author">— Mike R., Technical Support Team</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GET STARTED SECTION -->
+<section id="get-started" class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form" data-aos="fade-up">
+                    <div class="text-center mb-4">
+                        <h3>Ready to Get Started?</h3>
+                        <p class="text-secondary">Join our volunteer community today! We'll help match you with opportunities that fit your interests and schedule.</p>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                        <a href="https://forums.vonet.org/posting.php?mode=post&f=7" target="_blank" class="btn btn-primary-solid">
+                            <i class="fas fa-users me-2"></i>Join Our Forum
+                        </a>
+                        <a href="https://www.meetup.com/vegasopennet/" target="_blank" class="btn btn-secondary-outline">
+                            <i class="fas fa-calendar me-2"></i>Attend a Meetup
+                        </a>
+                        <a href="https://wiki.vonet.org/index.php?title=How_to_Join" target="_blank" class="btn btn-secondary-outline">
+                            <i class="fas fa-book me-2"></i>Read Getting Started Guide
+                        </a>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <p class="small text-secondary">
+                            <strong>New to volunteering?</strong> No problem! We provide full training and pair you with experienced volunteers. 
+                            Questions? <a href="/contact">Contact us</a> or join our <a href="https://forums.vonet.org/" target="_blank">community forum</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEXT STEPS SECTION -->
+<section class="section bg-light">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 data-aos="fade-up">Your Journey Starts Here</h2>
+                <p class="text-secondary mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Once you join our community, here's what happens next:
+                </p>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mb-3">
+                            <i class="fas fa-comments" style="font-size: 3rem; color: var(--bright-cyan);"></i>
+                        </div>
+                        <h5>1. Connect</h5>
+                        <p class="small text-secondary">Join our forum and introduce yourself. Tell us about your interests and availability.</p>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mb-3">
+                            <i class="fas fa-chalkboard-teacher" style="font-size: 3rem; color: var(--hot-pink);"></i>
+                        </div>
+                        <h5>2. Learn</h5>
+                        <p class="small text-secondary">Attend orientation sessions and get hands-on training from experienced volunteers.</p>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="mb-3">
+                            <i class="fas fa-rocket" style="font-size: 3rem; color: var(--sunny-yellow);"></i>
+                        </div>
+                        <h5>3. Contribute</h5>
+                        <p class="small text-secondary">Start making an impact by participating in installations, outreach, or support activities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

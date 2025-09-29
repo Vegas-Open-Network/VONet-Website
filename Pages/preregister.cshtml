@@ -1,0 +1,404 @@
+﻿@page
+@model VONetWebsite.Pages.preregisterModel
+@{
+    ViewData["Title"] = "Pre-Register for VONet";
+}
+
+<style>
+    .preregister-form {
+        background: var(--light-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 2px solid #f0f0f0;
+        padding: 40px;
+        margin: 20px 0;
+    }
+
+    .form-control-custom {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        background: #fafafa;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .form-control-custom:focus {
+        outline: none;
+        border-color: var(--bright-cyan);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0, 182, 227, 0.1);
+    }
+
+    .form-label-custom {
+        font-weight: 700;
+        color: var(--dark-text);
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-check-custom {
+        margin-bottom: 15px;
+    }
+
+    .form-check-custom .form-check-input {
+        margin-top: 0.25rem;
+        margin-right: 0.75rem;
+    }
+
+    .form-check-custom .form-check-label {
+        font-weight: 500;
+        color: var(--dark-text);
+        line-height: 1.4;
+    }
+
+    .interest-card {
+        background: #f8f9ff;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .interest-card:hover {
+        border-color: var(--bright-cyan);
+        box-shadow: 0 4px 12px rgba(0, 182, 227, 0.1);
+    }
+
+    .interest-card.selected {
+        border-color: var(--bright-cyan);
+        background: rgba(0, 182, 227, 0.05);
+    }
+
+    .interest-card .form-check-input:checked {
+        background-color: var(--bright-cyan);
+        border-color: var(--bright-cyan);
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, var(--hot-pink), #ff1a9b);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(236, 0, 140, 0.3);
+        background: linear-gradient(135deg, #d1006f, #ff1a9b);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .info-section {
+        background: #f8f9ff;
+        border-left: 4px solid var(--bright-cyan);
+        padding: 20px;
+        margin: 30px 0;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .required-field::after {
+        content: " *";
+        color: var(--hot-pink);
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .preregister-form {
+            padding: 25px;
+        }
+        
+        .submit-btn {
+            font-size: 1rem;
+            padding: 12px 30px;
+        }
+    }
+</style>
+
+<!-- HERO SECTION -->
+<section class="section textured-bg" style="background: linear-gradient(135deg, var(--hot-pink), #ff1a9b); color: white; padding: 80px 0;">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 mb-4" data-aos="fade-up">
+                    Pre-Register for VONet
+                </h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Join the waitlist for community-owned internet in Las Vegas. Help us understand your needs and location to plan our network expansion.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN FORM SECTION -->
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="preregister-form" data-aos="fade-up">
+                    <div class="text-center mb-4">
+                        <h2>Get on the List</h2>
+                        <p class="text-secondary">Fill out the form below to pre-register for VONet. This helps us prioritize network expansion and understand community needs.</p>
+                    </div>
+
+                    <form id="preregister-form" method="post">
+                        <!-- Personal Information -->
+                        <div class="mb-4">
+                            <h4 class="mb-3" style="color: var(--hot-pink);">Personal Information</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label-custom required-field">First Name</label>
+                                    <input type="text" class="form-control form-control-custom" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label-custom required-field">Last Name</label>
+                                    <input type="text" class="form-control form-control-custom" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+
+                            <label for="email" class="form-label-custom required-field">Email Address</label>
+                            <input type="email" class="form-control form-control-custom" id="email" name="email" required>
+
+                            <label for="phone" class="form-label-custom required-field">Phone Number</label>
+                            <input type="tel" class="form-control form-control-custom" id="phone" name="phone" required>
+                        </div>
+
+                        <!-- Address Information -->
+                        <div class="mb-4">
+                            <h4 class="mb-3" style="color: var(--bright-cyan);">Installation Location</h4>
+                            
+                            <label for="address" class="form-label-custom required-field">Street Address</label>
+                            <input type="text" class="form-control form-control-custom" id="address" name="address" required>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="city" class="form-label-custom required-field">City</label>
+                                    <input type="text" class="form-control form-control-custom" id="city" name="city" value="Las Vegas" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="zipCode" class="form-label-custom required-field">ZIP Code</label>
+                                    <input type="text" class="form-control form-control-custom" id="zipCode" name="zipCode" required>
+                                </div>
+                            </div>
+
+                            <label for="propertyType" class="form-label-custom required-field">Property Type</label>
+                            <select class="form-control form-control-custom" id="propertyType" name="propertyType" required>
+                                <option value="">Select property type</option>
+                                <option value="single-family">Single Family Home</option>
+                                <option value="apartment">Apartment/Condo</option>
+                                <option value="business">Business</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Interest Type -->
+                        <div class="mb-4">
+                            <h4 class="mb-3" style="color: var(--sunny-yellow); color: #B8860B;">What are you interested in?</h4>
+                            <p class="text-secondary mb-3">Select all that apply. You can change your mind later.</p>
+
+                            <div class="interest-card">
+                                <div class="form-check form-check-custom">
+                                    <input class="form-check-input" type="checkbox" id="connect" name="interests" value="connect">
+                                    <label class="form-check-label" for="connect">
+                                        <strong>Get Connected</strong> - I want internet service through VONet
+                                        <br><small class="text-secondary">Connect to our community network for internet access</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="interest-card">
+                                <div class="form-check form-check-custom">
+                                    <input class="form-check-input" type="checkbox" id="host" name="interests" value="host">
+                                    <label class="form-check-label" for="host">
+                                        <strong>Host Equipment</strong> - I can offer roof space for network equipment
+                                        <br><small class="text-secondary">Help expand the network by hosting antennas or equipment</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="interest-card">
+                                <div class="form-check form-check-custom">
+                                    <input class="form-check-input" type="checkbox" id="volunteer" name="interests" value="volunteer">
+                                    <label class="form-check-label" for="volunteer">
+                                        <strong>Volunteer</strong> - I want to help build and maintain the network
+                                        <br><small class="text-secondary">Join our volunteer team for installations, outreach, or technical support</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="interest-card">
+                                <div class="form-check form-check-custom">
+                                    <input class="form-check-input" type="checkbox" id="support" name="interests" value="support">
+                                    <label class="form-check-label" for="support">
+                                        <strong>Financial Support</strong> - I want to donate to help expand VONet
+                                        <br><small class="text-secondary">Support network growth through donations</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Newsletter Signup -->
+                        <div class="mb-4">
+                            <div class="interest-card">
+                                <div class="form-check form-check-custom">
+                                    <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" value="yes" checked>
+                                    <label class="form-check-label" for="newsletter">
+                                        <strong>Newsletter Subscription</strong> - Keep me updated on VONet progress
+                                        <br><small class="text-secondary">Receive updates about network expansion, community events, and volunteer opportunities</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How did you hear about us -->
+                        <div class="mb-4">
+                            <label for="hearAbout" class="form-label-custom">How did you hear about VONet?</label>
+                            <select class="form-control form-control-custom" id="hearAbout" name="hearAbout">
+                                <option value="">Select an option</option>
+                                <option value="word-of-mouth">Word of mouth</option>
+                                <option value="social-media">Social media</option>
+                                <option value="meetup">Meetup/Event</option>
+                                <option value="news-article">News article</option>
+                                <option value="search-engine">Search engine</option>
+                                <option value="reddit">Reddit</option>
+                                <option value="forum">Community forum</option>
+                                <option value="flyer">Flyer/Poster</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Additional Comments -->
+                        <div class="mb-4">
+                            <label for="comments" class="form-label-custom">Additional Comments or Questions</label>
+                            <textarea class="form-control form-control-custom" id="comments" name="comments" rows="4" placeholder="Tell us more about your situation, specific needs, or any questions you have..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Pre-Registration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Information Section -->
+                <div class="info-section" data-aos="fade-up" data-aos-delay="200">
+                    <h5><i class="fas fa-info-circle me-2" style="color: var(--bright-cyan);"></i>What happens next?</h5>
+                    <ul class="mb-0">
+                        <li><strong>Assessment:</strong> We'll review your location and needs to plan network expansion</li>
+                        <li><strong>Community Building:</strong> We'll connect you with neighbors and volunteers in your area</li>
+                        <li><strong>Updates:</strong> You'll receive periodic updates on network progress and expansion plans</li>
+                        <li><strong>Installation:</strong> When service becomes available in your area, we'll reach out to schedule installation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEXT STEPS SECTION -->
+<section class="section bg-light">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 data-aos="fade-up">While You Wait</h2>
+                <p class="text-secondary mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Here are some ways to get involved with VONet while we work on expanding to your area:
+                </p>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-custom bg-white text-dark">
+                            <div class="icon"><i class="fas fa-users" style="color: var(--bright-cyan); font-size: 2.5rem;"></i></div>
+                            <h5>Join Our Community</h5>
+                            <p class="small text-secondary">Connect with other VONet members and volunteers in our forums.</p>
+                            <a href="https://forums.vonet.org/" target="_blank" class="fw-bold">Visit Forums →</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card-custom bg-white text-dark">
+                            <div class="icon"><i class="fas fa-calendar-alt" style="color: var(--hot-pink); font-size: 2.5rem;"></i></div>
+                            <h5>Attend Meetups</h5>
+                            <p class="small text-secondary">Learn more about mesh networking at our monthly community meetings.</p>
+                            <a href="https://www.meetup.com/vegasopennet/" target="_blank" class="fw-bold">Find Events →</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="card-custom bg-white text-dark">
+                            <div class="icon"><i class="fas fa-hands-helping" style="color: var(--sunny-yellow); font-size: 2.5rem;"></i></div>
+                            <h5>Volunteer</h5>
+                            <p class="small text-secondary">Help us expand faster by joining our volunteer installation teams.</p>
+                            <a href="/volunteer" class="fw-bold">Get Involved →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Add interactivity to interest cards
+    document.querySelectorAll('.interest-card').forEach(card => {
+        const checkbox = card.querySelector('.form-check-input');
+        
+        card.addEventListener('click', (e) => {
+            if (e.target.type !== 'checkbox') {
+                checkbox.checked = !checkbox.checked;
+                updateCardState(card, checkbox.checked);
+            }
+        });
+        
+        checkbox.addEventListener('change', () => {
+            updateCardState(card, checkbox.checked);
+        });
+    });
+    
+    function updateCardState(card, checked) {
+        if (checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+    }
+    
+    // Form validation
+    document.getElementById('preregister-form').addEventListener('submit', function(e) {
+        const interests = document.querySelectorAll('input[name="interests"]:checked');
+        
+        if (interests.length === 0) {
+            e.preventDefault();
+            alert('Please select at least one area of interest.');
+            return false;
+        }
+        
+        // Basic phone number validation
+        const phone = document.getElementById('phone').value;
+        const phonePattern = /^[\+]?[1-9][\d]{0,15}$/;
+        if (!phonePattern.test(phone.replace(/[\s\-\(\)]/g, ''))) {
+            e.preventDefault();
+            alert('Please enter a valid phone number.');
+            return false;
+        }
+        
+        return true;
+    });
+</script>
