@@ -377,6 +377,138 @@
                 color: white;
                 transform: translateY(-3px);
             }
+
+        /* --- Exit Intent Popup Styles --- */
+        .exit-intent-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .exit-intent-popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 0.4s ease-out;
+        }
+
+        .exit-intent-popup h3 {
+            color: var(--hot-pink);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .exit-intent-popup p {
+            color: var(--dark-text);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .exit-intent-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .exit-intent-close:hover {
+            color: var(--hot-pink);
+        }
+
+        .btn-popup-donate {
+            background-color: var(--hot-pink);
+            color: var(--light-bg);
+            border: 2px solid var(--hot-pink);
+            padding: 12px 30px;
+            font-weight: 700;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .btn-popup-donate:hover {
+            background-color: var(--bright-cyan);
+            border-color: var(--bright-cyan);
+            color: var(--light-bg);
+        }
+
+        .btn-popup-later {
+            background-color: transparent;
+            color: var(--dark-text);
+            border: 2px solid #ddd;
+            padding: 12px 30px;
+            font-weight: 700;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-popup-later:hover {
+            background-color: #f0f0f0;
+            color: var(--dark-text);
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @@keyframes slideInUp {
+            from {
+                transform: translate(-50%, -30%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .exit-intent-popup {
+                padding: 30px 20px;
+            }
+            
+            .exit-intent-popup h3 {
+                font-size: 1.5rem;
+            }
+            
+            .btn-popup-donate,
+            .btn-popup-later {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
     </style>
 
 </head>
@@ -407,7 +539,21 @@
         </div>
     </nav>
 
-
+    <!-- Exit Intent Popup -->
+    <div id="exitIntentOverlay" class="exit-intent-overlay">
+        <div class="exit-intent-popup">
+            <button class="exit-intent-close" onclick="closeExitIntentPopup()">&times;</button>
+            <i class="fas fa-heart" style="font-size: 3rem; color: var(--hot-pink); margin-bottom: 20px;"></i>
+            <h3>Wait! Help Keep Vegas Connected</h3>
+            <p>Before you go, consider supporting our mission to build a community-owned internet network for Las Vegas. Every donation helps us expand free, accessible internet to more neighborhoods.</p>
+            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
+                <a href="/donate" class="btn-popup-donate">
+                    <i class="fas fa-heart me-2"></i>Support VONet
+                </a>
+                <button class="btn-popup-later" onclick="dismissExitIntentPopup()">Maybe Later</button>
+            </div>
+        </div>
+    </div>
 
     @RenderBody()
 
@@ -463,6 +609,110 @@
             duration: 800,
             once: true,
         });
+
+        // Exit Intent Popup Logic with 7-day dismissal
+        let exitIntentShown = false;
+        let mouseLeaveTimer;
+        const DISMISSAL_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+
+        function isPopupDismissed() {
+            const dismissedUntil = localStorage.getItem('vonet_exit_intent_dismissed_until');
+            if (!dismissedUntil) return false;
+            
+            const dismissedUntilDate = new Date(parseInt(dismissedUntil));
+            return new Date() < dismissedUntilDate;
+        }
+
+        function shouldShowPopup() {
+            // Don't show if already shown in this session
+            if (exitIntentShown) return false;
+            
+            // Don't show if dismissed within the last 7 days
+            if (isPopupDismissed()) return false;
+            
+            // Don't show if user is on donate page
+            if (window.location.pathname === '/donate') return false;
+            
+            return true;
+        }
+
+        function showExitIntentPopup() {
+            if (shouldShowPopup()) {
+                document.getElementById('exitIntentOverlay').style.display = 'block';
+                exitIntentShown = true;
+                
+                // Track analytics if Umami is available
+                if (typeof umami !== 'undefined') {
+                    umami.track('exit-intent-popup-shown');
+                }
+            }
+        }
+
+        function closeExitIntentPopup() {
+            document.getElementById('exitIntentOverlay').style.display = 'none';
+            
+            // Track analytics if Umami is available
+            if (typeof umami !== 'undefined') {
+                umami.track('exit-intent-popup-closed');
+            }
+        }
+
+        function dismissExitIntentPopup() {
+            document.getElementById('exitIntentOverlay').style.display = 'none';
+            
+            // Set dismissal timestamp for 7 days from now
+            const dismissedUntil = new Date().getTime() + DISMISSAL_DURATION_MS;
+            localStorage.setItem('vonet_exit_intent_dismissed_until', dismissedUntil.toString());
+            
+            // Track analytics if Umami is available
+            if (typeof umami !== 'undefined') {
+                umami.track('exit-intent-popup-dismissed-7days');
+            }
+        }
+
+        // Mouse leave detection for exit intent
+        document.addEventListener('mouseleave', function(e) {
+            // Only trigger if mouse leaves through the top of the viewport
+            if (e.clientY <= 0) {
+                clearTimeout(mouseLeaveTimer);
+                mouseLeaveTimer = setTimeout(showExitIntentPopup, 500);
+            }
+        });
+
+        // Close popup when clicking outside
+        document.getElementById('exitIntentOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExitIntentPopup();
+            }
+        });
+
+        // Close popup with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeExitIntentPopup();
+            }
+        });
+
+        // Alternative: Show popup before page unload (less intrusive)
+        window.addEventListener('beforeunload', function(e) {
+            if (shouldShowPopup()) {
+                // This will show a browser's default confirmation dialog
+                e.preventDefault();
+                e.returnValue = 'Help keep Vegas connected! Consider supporting VONet before you leave.';
+                return e.returnValue;
+            }
+        });
+
+        // Optional: Time-based trigger (show after 30 seconds if user hasn't left)
+        setTimeout(function() {
+            if (shouldShowPopup() && document.visibilityState === 'visible') {
+                // Only show if user is actively viewing the page
+                const timeSpent = performance.now();
+                if (timeSpent > 30000) { // 30 seconds
+                    showExitIntentPopup();
+                }
+            }
+        }, 30000);
     </script>
 
     <script src="~/js/site.js?id=@Guid.NewGuid()" asp-append-version="true"></script>
